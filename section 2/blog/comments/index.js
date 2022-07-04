@@ -22,7 +22,7 @@ app.post("/posts/:id/comments", async(req, res) => {
 
     const comments = commentsByPostId[postId] || [];
     comments.push({ id: commentId, content });
-    await axios.post("http://127.0.0.1:4005/events",{
+    await axios.post("http://event-bus-srv:4005/events",{
         type:"CommentCreated",
         data:{
             postId,
@@ -47,7 +47,7 @@ app.post("/events",async (req,res)=>{
         );
         if(comment!=undefined){
             comment.status = status;
-            await axios.post("http://127.0.0.1:4005/events",{
+            await axios.post("http://event-bus-srv:4005/events",{
                 type:"CommentUpdated",
                 data:{id,status,postId,content}
             });

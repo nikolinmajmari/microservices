@@ -25,7 +25,7 @@ app.post("/posts", (req, res, next) => {
         id,
         title
     };
-    axios.post("http://127.0.0.1:4005/events",{
+    axios.post("http://event-bus-srv:4005/events",{
         type:"PostCreated",
         data:{
             id,title
@@ -41,5 +41,6 @@ app.post("/events",async (req,res)=>{
 });
 
 app.listen(4000, () => {
+    console.log("v40")
     console.log("listening on 4000");
 })
