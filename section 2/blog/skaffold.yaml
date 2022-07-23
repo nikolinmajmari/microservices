@@ -1,0 +1,65 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+
+build:
+  local:
+    push: false
+  
+  artifacts:
+    - image: nikolinmajmari/blogclient
+      context: client 
+      docker:
+        dockerfile: Dockerfile 
+      sync:
+        manual:
+          - src: 'build/*'
+            dest: /usr/share/nginx/html 
+
+    - image: nikolinmajmari/blogpost
+      context: posts 
+      docker:
+        dockerfile: Dockerfile 
+      sync:
+        manual:
+          - src: '*.js'
+            dest: '*.js' 
+
+    - image: nikolinmajmari/blogquery
+      context: query 
+      docker:
+        dockerfile: Dockerfile 
+      sync:
+        manual:
+          - src: '*.js'
+            dest: '*.js' 
+
+    - image: nikolinmajmari/blogevent-bus
+      context: event-bus 
+      docker:
+        dockerfile: Dockerfile 
+      sync:
+        manual:
+          - src: '*.js'
+            dest: '*.js' 
+
+    - image: nikolinmajmari/blogcomment
+      context: client 
+      docker:
+        dockerfile: Dockerfile 
+      sync:
+        manual:
+          - src: '*.js'
+            dest: '*.js' 
+
+    - image: nikolinmajmari/blogmoderation
+      context: client 
+      docker:
+        dockerfile: Dockerfile 
+      sync:
+        manual:
+          - src: '*.js'
+            dest: '*.js' 

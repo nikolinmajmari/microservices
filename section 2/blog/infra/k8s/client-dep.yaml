@@ -15,7 +15,6 @@ spec:
       containers:
         - name: client 
           image: nikolinmajmari/blogclient
-
 ---
 
 apiVersion: v1 
