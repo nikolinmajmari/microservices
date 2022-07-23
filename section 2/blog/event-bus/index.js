@@ -4,6 +4,10 @@ const axios = require("axios");
 
 const app = express();
 app.use(bodyParser.json());
+app.use((req,res,next)=>{
+    console.log("request on event bus service");
+    next();
+})
 
 const events = [];
 

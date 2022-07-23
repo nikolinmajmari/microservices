@@ -8,7 +8,7 @@ export default ()=>{
     const handleSubmit = async (e)=>{
         e.preventDefault();
         
-        const res = await axios.post("http://127.0.0.1:4000/posts",{
+        const res = await axios.post("http://posts.com/posts/create",{
             title
         })
 

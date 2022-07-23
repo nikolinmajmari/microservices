@@ -9,7 +9,11 @@ const generator = () => randomBytes(4).toString("hex");
 
 const app = express();
 app.use(cors());
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+app.use((req,res,next)=>{
+    console.log("request on posts service");
+    next();
+})
 
 /// get route for getting posts 
 app.get("/posts", (req, res) => {
@@ -18,14 +22,14 @@ app.get("/posts", (req, res) => {
 
 
 /// post route to sent posts 
-app.post("/posts", (req, res, next) => {
+app.post("/posts/create", (req, res, next) => {
     const id = generator();
     const { title } = req.body;
     posts[id] = {
         id,
         title
     };
-    axios.post("http://event-bus-srv:4005/events",{
+    axios.post("http://event-bus-serv:4005/events",{
         type:"PostCreated",
         data:{
             id,title

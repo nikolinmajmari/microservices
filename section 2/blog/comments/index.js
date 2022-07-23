@@ -10,6 +10,10 @@ const commentsByPostId = {};
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
+app.use((req,res,next)=>{
+    console.log("request on comments service");
+    next();
+})
 
 app.get("/posts/:id/comments", (req, res) => {
     res.send(commentsByPostId[req.params.id] || [])
@@ -22,7 +26,7 @@ app.post("/posts/:id/comments", async(req, res) => {
 
     const comments = commentsByPostId[postId] || [];
     comments.push({ id: commentId, content });
-    await axios.post("http://event-bus-srv:4005/events",{
+    await axios.post("http://event-bus-serv:4005/events",{
         type:"CommentCreated",
         data:{
             postId,
@@ -47,7 +51,7 @@ app.post("/events",async (req,res)=>{
         );
         if(comment!=undefined){
             comment.status = status;
-            await axios.post("http://event-bus-srv:4005/events",{
+            await axios.post("http://event-bus-serv:4005/events",{
                 type:"CommentUpdated",
                 data:{id,status,postId,content}
             });
@@ -56,6 +60,5 @@ app.post("/events",async (req,res)=>{
 
     res.send({});
 });
-
 
 app.listen(4001, () => console.log("listening on 4001"));

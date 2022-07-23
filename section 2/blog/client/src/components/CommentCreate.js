@@ -9,7 +9,7 @@ export default ({postId})=>{
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
-        await axios.post(`http://127.0.0.1:4001/posts/${postId}/comments`,{
+        await axios.post(`http://posts.com/posts/${postId}/comments`,{
             content
         });
         setContent("");

@@ -8,7 +8,7 @@ import CommentList from "./CommentList";
 export default ()=>{
     const [posts,setPosts] = React.useState({});
     const fetchPosts = async ()=>{
-        const res = await axios.get("http://127.0.0.1:4002/posts");
+        const res = await axios.get("http://posts.com/posts");
         const data = res.data;
         console.log(data);
         setPosts(data);
